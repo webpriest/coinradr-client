@@ -93,11 +93,23 @@
             </button>
 
             <!-- Profile dropdown -->
+            <template v-if="!authenticated">
+            <Menu as="div" class="ml-4 relative flex-shrink-0">
+              <div>
+                <MenuButton class="flex text-sm focus:outline-none" @click="loginFormLoad">
+                  <span class="sr-only">Open user menu</span>
+                  <LockClosedIcon class="-ml-0.5 mr-2 h-8 w-8 text-red-600" aria-hidden="true" />
+                </MenuButton>
+              </div>
+              
+            </Menu>
+            </template>
+            <template v-else>
             <Menu as="div" class="ml-4 relative flex-shrink-0">
               <div>
                 <MenuButton class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                  <img class="h-8 w-8 rounded-full" :src="userData.imageUrl" alt="" />
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -108,6 +120,7 @@
                 </MenuItems>
               </transition>
             </Menu>
+            </template>
           </div>
         </Popover>
       </div>
@@ -136,6 +149,7 @@
         </div>
       </ModalPop>
       
+      <LoginForm :loginFormStatus="loginFormStatus"></LoginForm>
     </header>
 </template>
 
@@ -157,15 +171,18 @@ import {
   HomeIcon,
   SearchIcon,
 } from '@heroicons/vue/solid'
-import { BellIcon, MenuIcon, XIcon, MoonIcon, SwitchHorizontalIcon} from '@heroicons/vue/outline'
+import { BellIcon, MenuIcon, XIcon, MoonIcon, SwitchHorizontalIcon, LockClosedIcon} from '@heroicons/vue/outline'
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+
 import Logo from '@/components/Front/Logo'
 import Navigation from '@/components/Front/Navigation'
 import ModalPop from '@/components/Front/ModalPop'
+import LoginForm from '@/components/Front/Auth/LoginForm'
 import InputWithSelect from '@/components/Front/Forms/InputWithSelect'
 
-const user = {
+const userData = {
   name: 'Whitney Francis',
   email: 'whitney@example.com',
   imageUrl:
@@ -198,24 +215,43 @@ export default {
         MoonIcon,
         SwitchHorizontalIcon,
         SearchIcon,
+        LockClosedIcon,
         XIcon,
         Logo,
         Navigation,
         ModalPop,
-        InputWithSelect
+        InputWithSelect,
+        LoginForm
     },
     setup() {
+        const store = useStore()
         const modalStatus = ref(false)
+        const loginFormStatus = ref(false)
 
         const swapAction = () => {
           modalStatus.value = !modalStatus.value
         }
 
+        const loginFormLoad = () => {
+          loginFormStatus.value = !loginFormStatus.value
+        }
+
+        const authenticated = computed(() => {
+          return store.state.authenticated
+        })
+        const user = computed(() => {
+          return store.state.user
+        })
+
         return {
-            user,
+            userData,
             userNavigation,
             modalStatus,
             swapAction,
+            loginFormStatus,
+            loginFormLoad,
+            authenticated,
+            user
         }
     }
 }
