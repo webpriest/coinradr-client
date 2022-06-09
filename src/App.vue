@@ -1,31 +1,42 @@
 <template>
-  <div class="min-h-full">
-    <TopHeader />
-    
-    <HeaderSection />
-
-    <main class="">
-      <router-view />
-    </main>
-
-    <FooterSection />
+  <div>
+    <component :is="layout"></component>
   </div>
 </template>
 
 <script>
-import TopHeader from '@/components/Front/TopHeader'
-import HeaderSection from '@/components/Front/HeaderSection'
-import FooterSection from '@/components/Front/FooterSection'
+import OpenLayout from './OpenLayout'
+import LeadLayout from './LeadLayout'
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
   components: {
-    TopHeader,
-    HeaderSection,
-    FooterSection
+    OpenLayout,
+    LeadLayout
   },
   setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const layout = computed(() => {
+      if(store.getters.authenticated === true) {
+        if(store.getters.stint === 'proper') {
+          return 'open-layout'
+        }
+        else {
+          // router.push({ name: 'lead.index' })
+          return 'lead-layout'
+        }
+      }
+      else {
+        return 'open-layout'
+      }
+    })
+
     return {
-      
+      layout
     }
   },
 }

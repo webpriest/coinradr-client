@@ -2,17 +2,19 @@
     <div>
         My Profile
         <button @click="loadForm">Click to login</button>
-        <LoginForm :loginFormStatus="loginFormStatus"></LoginForm>
+        <div class="w-1/3 mx-auto border border-gray-500 p-4">
+            <SignIn></SignIn>
+        </div>
     </div>
 </template>
 
 <script>
 import { ref } from 'vue'
-import LoginForm from '@/components/Front/Auth/LoginForm'
+import SignIn from '@/components/Front/Auth/SignIn'
 
 export default {
     components: {
-        LoginForm
+        SignIn
     },
     setup() {
         const loginFormStatus = ref(false)

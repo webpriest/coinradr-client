@@ -3,88 +3,38 @@
 <div class="space-y-6 lg:col-start-1 lg:col-span-2">
         <!-- Description list-->
         <section aria-labelledby="applicant-information-title">
-        <div class="bg-white shadow sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6 flex justify-between">
                 <div class="">
-                    <h2 id="applicant-information-title" class="text-3xl leading-6 font-bold text-gray-600">Top <span class="font-medium text-lg">|</span> Trending <span class="font-medium text-lg">|</span> Hot</h2>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Happening now</p>
+                    <h2 id="applicant-information-title" class="text-3xl leading-6 font-bold text-gray-600 dark:text-gray-100">Top <span class="font-medium text-lg">|</span> Trending <span class="font-medium text-lg">|</span> Hot</h2>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Happening now</p>
                 </div>
             </div>
             <div class="px-4 py-5 sm:px-6">
                 <div class="shadow overflow-hidden border-b sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="font-medium">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-400">
+                        <thead class="font-bold">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">24h</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chart</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-200 uppercase tracking-wider">Asset</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-200 uppercase tracking-wider">Price</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-200 uppercase tracking-wider">24h</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 dark:text-gray-200 uppercase tracking-wider">Market Cap</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b border-gray-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 inline-flex">
-                                <img src="@/assets/img/icons/bnb.svg" class="mr-3" /> 
-                                BNB
+                            <tr class="border-b border-gray-200 dark:border-gray-600" v-for="hot in hottest" :key="hot.id">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200 inline-flex">
+                                <img :src="`https://www.cryptocompare.com${hot.CoinInfo.ImageUrl}`" class="w-6 mr-3" /> 
+                                {{ hot.CoinInfo.Name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $387.60
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                    {{ hot.DISPLAY.USD.PRICE }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $62.09B
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800dark:text-gray-200">
+                                    <span class="px-2 inline-flex text-xs font-semibold rounded" :class="[(hot.DISPLAY.USD.CHANGEPCT24HOUR <0) ? 'bg-red-100 dark:bg-transparent text-red-800 dark:text-red-300' : 'bg-green-100 dark:bg-transparent text-green-800 dark:text-green-400']">{{ hot.DISPLAY.USD.CHANGEPCT24HOUR }}</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    <span class="px-2 inline-flex text-xs font-semibold rounded bg-red-100 text-red-800">-1.10%</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    $1.60B
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <Chart />
-                                </td>
-                            </tr>
-                            <tr class="border-b border-gray-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 inline-flex">
-                                <img src="@/assets/img/icons/btc.svg" class="mr-3" /> 
-                                BTC
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $43,293
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $735.90B
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    <span class="px-2 inline-flex text-xs font-semibold rounded bg-green-100 text-green-800">0.34%</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    $25.40B
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <Chart />
-                                </td>
-                            </tr>
-                            <tr class="border-b border-gray-200">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 inline-flex">
-                                <img src="@/assets/img/icons/eth.svg" class="mr-3" /> 
-                                Ethereum
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $2,957
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    $311.80B
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                    <span class="px-2 inline-flex text-xs font-semibold rounded bg-green-100 text-green-800">0.75%</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    $12.36B
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <Chart />
+                                <td class="px-6 py-4 whitespace-nowrap dark:text-gray-200">
+                                    {{ hot.DISPLAY.USD.MKTCAP }}
                                 </td>
                             </tr>
                         </tbody>
@@ -99,14 +49,24 @@
 <script>
 
 import Chart from '@/components/Front/Chart.vue'
+import useCoins from '../../api/useCoins'
+import { onMounted } from 'vue'
 
 export default {
     components: {
         Chart,
     },
     setup() {
+        const { hottest, percent, topCoins, currencyUSD, currencyUSDnoD, currencyUSD6d } = useCoins()
+
+        onMounted(topCoins)
+
         return {
-            
+            hottest,
+            percent,
+            currencyUSD,
+            currencyUSDnoD,
+            currencyUSD6d,
         }
     },
 }

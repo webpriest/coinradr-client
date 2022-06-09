@@ -21,6 +21,14 @@ body {
     background-image: linear-gradient(120deg, #FD494A 0%, #CD3383 100%);
 }
 
+.green-color-button {
+    background-image: linear-gradient(120deg, #37bfb8 0%, #1da59e 100%);
+}
+
+.green-color-button:hover {
+    background-image: linear-gradient(120deg, #1da59e 0%, #37bfb8 100%);
+}
+
 .telegram {
     background-image: linear-gradient(120deg, #229ED9 0%, #0e7082 100%);
 }
